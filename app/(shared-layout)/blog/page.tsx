@@ -6,10 +6,10 @@ import { fetchQuery } from "convex/nextjs";
 //import { useQuery } from "convex/react";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
-export default   async function BlogPage() {
-  //const data = useQuery(api.posts.getPosts);
-  const data= await fetchQuery(api.posts.getPosts) //server action
+export default  function BlogPage() {
   return (
     <>
       <div className="py-12">
@@ -21,8 +21,22 @@ export default   async function BlogPage() {
             Insights, thoughts, and trends from our team.
           </p>
         </div>
+          <Suspense fallback={<BlogLoading/>}>
+            <LoadingBlogList/>
+          </Suspense>
+         
+      </div>
+    </>
+  );
+}
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+async function LoadingBlogList() {
+ //const data = useQuery(api.posts.getPosts);
+  const data= await fetchQuery(api.posts.getPosts) //server action 
+  return (
+    <>
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {data?.map((post)=>(
              <Card key={post._id} className="
              pt-0">
@@ -47,7 +61,26 @@ export default   async function BlogPage() {
              </Card>
         ))}
         </div>
-      </div>
     </>
+  )
+}
+
+function BlogLoading() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 py-12">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="animate-pulse rounded-2xl border p-4 space-y-4"
+        >
+          <div className="h-48 bg-muted rounded-xl" />
+          <div className="h-5 bg-muted rounded w-3/4" />
+          <div className="h-4 bg-muted rounded w-full" />
+          <div className="h-4 bg-muted rounded w-5/6" />
+          <div className="h-10 bg-muted rounded-lg w-full" />
+        </div>
+      ))}
+    </div>
   );
 }
+
