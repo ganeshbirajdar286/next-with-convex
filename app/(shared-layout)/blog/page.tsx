@@ -1,4 +1,4 @@
-"use client"
+
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { api } from "@/convex/_generated/api";
@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default   async function BlogPage() {
   //const data = useQuery(api.posts.getPosts);
-  const data=await fetchQuery(api.posts.getPosts) //server action
+  const data= await fetchQuery(api.posts.getPosts) //server action
   return (
     <>
       <div className="py-12">
