@@ -1,4 +1,5 @@
 "use client";
+import { createBlogAction } from "@/app/actions";
 import { postSchema } from "@/app/schemas/Blog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,13 +30,20 @@ export default  function CreateRoute(){
 
 
       function onSubmit(values:z.infer<typeof postSchema>){
-         startTransition(()=>{
-               mutation({
-            body:values.content,
-            title:values.title,
-         });
-         toast.success("Blog created successfully ")
-         router.push("/")
+         startTransition(async()=>{
+        //        mutation({
+        //     body:values.content,
+        //     title:values.title,
+        //  });
+        console.log("runnig on client side");
+        //  server action
+        await  createBlogAction(values);
+          // router handler
+        // await fetch ("/api/create-blog",{
+        //   method:'POST',
+        // })
+        // toast.success("Blog created successfully ")
+        //  router.push("/")
          })
          
       }
