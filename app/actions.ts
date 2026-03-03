@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { getToken } from "@/lib/auth-server";
 
 export async function createBlogAction(values:z.infer<typeof postSchema>) { //  server action 
-   const parsed=postSchema.safeParse(values);
+   const parsed=postSchema.safeParse(values); // It checks if values match your schema. it is for zod
 
    if(!parsed.success){
     throw new Error("sommething went wrong")
